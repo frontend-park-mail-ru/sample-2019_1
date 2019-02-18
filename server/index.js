@@ -82,7 +82,7 @@ app.post('/login', function (req, res) {
 	ids[id] = email;
 
 	res.cookie('sessionid', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
-	res.status(201).json({id});
+	res.status(200).json({id});
 });
 
 app.get('/me', function (req, res) {
