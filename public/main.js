@@ -1,6 +1,6 @@
 'use strict';
 
-const root = document.getElementById('root');
+const application = document.getElementById('application');
 
 
 function ajax (callback, method, path, body) {
@@ -79,7 +79,7 @@ function createMenu () {
 	menuSection.appendChild(logo);
 	menuSection.appendChild(main);
 
-	root.appendChild(menuSection);
+	application.appendChild(menuSection);
 }
 
 function createSignIn () {
@@ -132,7 +132,7 @@ function createSignIn () {
 		const password = form.elements[ 'password' ].value;
 
 		ajax(function (xhr) {
-			root.innerHTML = '';
+			application.innerHTML = '';
 			createProfile();
 		}, 'POST', '/login', {
 			email: email,
@@ -140,7 +140,7 @@ function createSignIn () {
 		});
 	});
 
-	root.appendChild(signInSection);
+	application.appendChild(signInSection);
 }
 
 function createSignUp () {
@@ -211,7 +211,7 @@ function createSignUp () {
 		}
 
 		ajax(function (xhr) {
-			root.innerHTML = '';
+			application.innerHTML = '';
 			createProfile();
 		}, 'POST', '/signup', {
 			email: email,
@@ -220,7 +220,7 @@ function createSignUp () {
 		});
 	});
 
-	root.appendChild(signUpSection);
+	application.appendChild(signUpSection);
 }
 
 function createLeaderboard (users) {
@@ -280,12 +280,12 @@ function createLeaderboard (users) {
 
 		ajax(function (xhr) {
 			const users = JSON.parse(xhr.responseText);
-			root.innerHTML = '';
+			application.innerHTML = '';
 			createLeaderboard(users);
 		}, 'GET', '/users');
 	}
 
-	root.appendChild(leaderboardSection);
+	application.appendChild(leaderboardSection);
 }
 
 function createProfile (me) {
@@ -317,18 +317,18 @@ function createProfile (me) {
 		ajax(function (xhr) {
 			if (!xhr.responseText) {
 				alert('Unauthorized');
-				root.innerHTML = '';
+				application.innerHTML = '';
 				createMenu();
 				return;
 			}
 
 			const user = JSON.parse(xhr.responseText);
-			root.innerHTML = '';
+			application.innerHTML = '';
 			createProfile(user);
 		}, 'GET', '/me');
 	}
 
-	root.appendChild(profileSection);
+	application.appendChild(profileSection);
 }
 
 const pages = {
@@ -341,7 +341,7 @@ const pages = {
 
 createMenu();
 
-root.addEventListener('click', function (event) {
+application.addEventListener('click', function (event) {
 	if (!(event.target instanceof HTMLAnchorElement)) {
 		return;
 	}
@@ -354,7 +354,7 @@ root.addEventListener('click', function (event) {
 		dataHref: link.dataset.href
 	});
 
-	root.innerHTML = '';
+	application.innerHTML = '';
 
 	pages[ link.dataset.href ]();
 });
