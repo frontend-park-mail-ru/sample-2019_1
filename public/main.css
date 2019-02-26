@@ -1,4 +1,10 @@
+@import url('components/Board/Board.css');
+
 h1 {
   color: #005ff9;
   font-family: Helvetica, sans-serif;
+}
+
+a {
+	display: block;
 }
