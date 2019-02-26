@@ -2,7 +2,9 @@
   "name": "sample",
   "version": "1.0.0",
   "scripts": {
-    "start": "node server"
+    "start": "node server",
+    "tmpl": "./node_modules/.bin/fest-build --dir=public",
+    "prestart": "npm run tmpl"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,7 @@
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
+    "fest": "^0.12.1",
     "morgan": "^1.9.1",
     "uuid": "^3.3.2"
   }

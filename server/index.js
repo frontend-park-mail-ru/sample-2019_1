@@ -17,19 +17,19 @@ app.use(cookie());
 
 const users = {
 	'a.ostapenko@corp.mail.ru': {
-		email: 'a.ostapenko@corp.mail.ru',
+		email: '<strong>a.ostapenko@corp.mail.ru</strong>',
 		password: 'password',
 		age: 21,
 		score: 72,
 	},
 	'd.dorofeev@corp.mail.ru': {
-		email: 'd.dorofeev@corp.mail.ru',
+		email: '<img src="kek" onerror="console.log(`im watching you`);" />',
 		password: 'password',
 		age: 21,
 		score: 100500,
 	},
 	's.volodin@corp.mail.ru': {
-		email: 'marina.titova@corp.mail.ru',
+		email: '<iframe src="//example.com" onload="alert(1)">',
 		password: 'password',
 		age: 21,
 		score: 72,
