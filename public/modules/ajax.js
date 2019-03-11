@@ -1,5 +1,6 @@
 (function() {
 	const noop = () => null;
+	const baseUrl = 'http://localhost:3000';
 
 	class AjaxModule {
 		_ajax({
@@ -9,7 +10,7 @@
 			body = {},
 		} = {}) {
 			const xhr = new XMLHttpRequest();
-			xhr.open(method, path, true);
+			xhr.open(method, baseUrl + path, true);
 			xhr.withCredentials = true;
 
 			if (body) {
@@ -55,6 +56,29 @@
 				body,
 				method: 'POST',
 			});
+		}
+
+		doFetchGet({
+	         path = '/',
+		} = {}) {
+			return fetch(baseUrl + path, {
+				method: 'GET',
+				mode: 'cors',
+				credentials: 'include',
+				body: null,
+			});
+		}
+
+		doPromiseGet({
+			             path = '/',
+		             } = {}) {
+			return new Promise(function (resolve, reject) {
+				this._ajax({
+					callback: resolve,
+					path,
+					method: 'GET',
+				});
+			}.bind(this));
 		}
 	}
 

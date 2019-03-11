@@ -1,11 +1,12 @@
 'use strict';
 import {BoardComponent} from './components/Board/Board.js';
 import {RENDER_TYPES} from './utils/constants.js';
+
 const {AjaxModule} = window;
 
 const application = document.getElementById('application');
 
-function createMenuLink () {
+function createMenuLink() {
 	const menuLink = document.createElement('a');
 	menuLink.href = menuLink.dataset.href = 'menu';
 
@@ -14,7 +15,7 @@ function createMenuLink () {
 	return menuLink;
 }
 
-function createMenu () {
+function createMenu() {
 	const menuSection = document.createElement('section');
 	menuSection.dataset.sectionName = 'menu';
 
@@ -41,8 +42,8 @@ function createMenu () {
 
 
 	Object.entries(titles).forEach(function (entry) {
-		const href = entry[ 0 ];
-		const title = entry[ 1 ];
+		const href = entry[0];
+		const title = entry[1];
 
 		const a = document.createElement('a');
 		a.href = href;
@@ -60,7 +61,7 @@ function createMenu () {
 	application.appendChild(menuSection);
 }
 
-function createSignIn () {
+function createSignIn() {
 	const signInSection = document.createElement('section');
 	signInSection.dataset.sectionName = 'sign_in';
 
@@ -106,8 +107,8 @@ function createSignIn () {
 	form.addEventListener('submit', function (event) {
 		event.preventDefault();
 
-		const email = form.elements[ 'email' ].value;
-		const password = form.elements[ 'password' ].value;
+		const email = form.elements['email'].value;
+		const password = form.elements['password'].value;
 
 		AjaxModule.doPost({
 			callback() {
@@ -117,15 +118,15 @@ function createSignIn () {
 			path: '/login',
 			body: {
 				email: email,
-				password: password,
-			},
+				password: password
+			}
 		});
 	});
 
 	application.appendChild(signInSection);
 }
 
-function createSignUp () {
+function createSignUp() {
 	const signUpSection = document.createElement('section');
 	signUpSection.dataset.sectionName = 'sign_in';
 
@@ -181,10 +182,10 @@ function createSignUp () {
 	form.addEventListener('submit', function (event) {
 		event.preventDefault();
 
-		const email = form.elements[ 'email' ].value;
-		const age = parseInt(form.elements[ 'age' ].value);
-		const password = form.elements[ 'password' ].value;
-		const password_repeat = form.elements[ 'password_repeat' ].value;
+		const email = form.elements['email'].value;
+		const age = parseInt(form.elements['age'].value);
+		const password = form.elements['password'].value;
+		const password_repeat = form.elements['password_repeat'].value;
 
 		if (password !== password_repeat) {
 			alert('Passwords is not equals');
@@ -201,15 +202,15 @@ function createSignUp () {
 			body: {
 				email: email,
 				age: age,
-				password: password,
-			},
+				password: password
+			}
 		});
 	});
 
 	application.appendChild(signUpSection);
 }
 
-function createLeaderboard (users) {
+function createLeaderboard(users) {
 	const leaderboardSection = document.createElement('section');
 	leaderboardSection.dataset.sectionName = 'leaderboard';
 
@@ -226,7 +227,7 @@ function createLeaderboard (users) {
 	if (users) {
 		const board = new BoardComponent({
 			el: boardWrapper,
-			type: RENDER_TYPES.DOM,
+			type: RENDER_TYPES.DOM
 		});
 		board.data = JSON.parse(JSON.stringify(users));
 		board.render();
@@ -235,20 +236,54 @@ function createLeaderboard (users) {
 		em.textContent = 'Loading';
 		leaderboardSection.appendChild(em);
 
-		AjaxModule.doGet({
-			callback(xhr) {
+		// AjaxModule.doFetchGet({
+		// 	path: '/users'
+		// })
+		// 	.then(function (response) {
+		// 		console.log('Response code is', response.status);
+		//
+		// 		console.dir(response);
+		//
+		// 		return response.json();
+		// 		// return response.text();
+		// 		// return response.blob();
+		// 	})
+		// 	.then(function (users) {
+		// 		console.log(users);
+		// 		application.innerHTML = '';
+		// 		createLeaderboard(users);
+		// 	})
+		// 	.catch(console.error);
+
+		AjaxModule.doPromiseGet({
+			path: '/users'
+		})
+			.then(function (xhr) {
+				console.log('Response code is', xhr.status);
+
+				console.dir(xhr);
+
 				const users = JSON.parse(xhr.responseText);
+				console.log(users);
 				application.innerHTML = '';
 				createLeaderboard(users);
-			},
-			path: '/users',
-		});
+			})
+			.catch(console.error);
+
+		// AjaxModule.doGet({
+		// 	callback(xhr) {
+		// 		const users = JSON.parse(xhr.responseText);
+		// 		application.innerHTML = '';
+		// 		createLeaderboard(users);
+		// 	},
+		// 	path: '/users',
+		// });
 	}
 
 	application.appendChild(leaderboardSection);
 }
 
-function createProfile (me) {
+function createProfile(me) {
 	const profileSection = document.createElement('section');
 	profileSection.dataset.sectionName = 'profile';
 
@@ -287,7 +322,7 @@ function createProfile (me) {
 				application.innerHTML = '';
 				createProfile(user);
 			},
-			path: '/me',
+			path: '/me'
 		});
 	}
 
@@ -319,5 +354,5 @@ application.addEventListener('click', function (event) {
 
 	application.innerHTML = '';
 
-	pages[ link.dataset.href ]();
+	pages[link.dataset.href]();
 });
