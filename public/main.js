@@ -1,8 +1,19 @@
 'use strict';
 import {BoardComponent} from './components/Board/Board.js';
 import {RENDER_TYPES} from './utils/constants.js';
+import './modules/notifier.js';
 
 const {AjaxModule} = window;
+
+// if ('serviceWorker' in navigator) {
+// 	navigator.serviceWorker.register('sw.js')
+// 	.then((reg) => {
+// 		console.log('sw reg success:', reg);
+// 	})
+// 	.catch((err) => {
+// 		console.error('sw reg err:', err);
+// 	});
+// }
 
 const application = document.getElementById('application');
 

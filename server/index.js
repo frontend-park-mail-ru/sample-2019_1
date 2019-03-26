@@ -7,7 +7,16 @@ const morgan = require('morgan');
 const uuid = require('uuid/v4');
 const path = require('path');
 const url = require('url');
+const ws = require('express-ws');
 const app = express();
+
+ws(app);
+
+app.ws('/ws', (ws) => {
+	setInterval(() => {
+		ws.send((Math.random() * 100).toString(36));
+	}, 5000);
+});
 
 app.use(morgan('dev'));
 app.use(express.static(path.resolve(__dirname, '..', 'public')));
